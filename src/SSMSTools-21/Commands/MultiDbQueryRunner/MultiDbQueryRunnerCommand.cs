@@ -199,7 +199,6 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
                         var key = keyValue[0].Trim().ToLowerInvariant();
                         if (_sectionsToSanitize.Contains(key) && keyValue.Length > 1)
                         {
-                            // Remove whitespace from value
                             var newKey = key.Replace(" ", string.Empty);
                             return $"{newKey}={keyValue[1]}";
                         }
