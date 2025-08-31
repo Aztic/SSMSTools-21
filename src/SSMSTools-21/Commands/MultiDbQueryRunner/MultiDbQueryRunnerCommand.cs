@@ -64,8 +64,8 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            var menuCommandId = new CommandID(CommandSet, CommandId);
+            var menuItem = new MenuCommand(this.Execute, menuCommandId);
 
             _objectExplorerService = ((SSMSTools_21Package)package).ServiceProvider.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;
             _messageManager = ((SSMSTools_21Package)package).ServiceProvider.GetService(typeof(IMessageManager)) as IMessageManager;
@@ -87,13 +87,7 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
-        {
-            get
-            {
-                return this.package;
-            }
-        }
+        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider => this.package;
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -161,9 +155,7 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
             var usedServers = new HashSet<string>();
             var connections = new List<ConnectedServer>();
 
-            int arraySize;
-            INodeInformation[] nodes = new INodeInformation[10];
-            _objectExplorerService.GetSelectedNodes(out arraySize, out nodes);
+            _objectExplorerService.GetSelectedNodes(out var arraySize, out var nodes);
             if (arraySize != 1)
             {
                 throw new OnlyOneObjectExplorerNodeAllowedException("Only one node needs to be selected");

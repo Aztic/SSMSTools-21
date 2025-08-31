@@ -59,7 +59,7 @@ namespace SSMSTools_21
                 return _package.GetServiceAsync(typeof(IObjectExplorerService)).Result as IObjectExplorerService;
             });
 
-            services.AddSingleton<IUIService, UIService>();
+            services.AddSingleton<IUIService, UiService>();
         }
 
         private void RegisterWindows(IServiceCollection services)

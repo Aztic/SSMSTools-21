@@ -3,7 +3,7 @@ using SSMSTools_21.Services.Interfaces;
 
 namespace SSMSTools_21.Services
 {
-    internal class UIService : IUIService
+    internal class UiService : IUIService
     {
         public void ValidateUIThread()
         {

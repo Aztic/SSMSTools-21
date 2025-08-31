@@ -134,12 +134,12 @@ namespace SSMSTools_21
                 throw new ArgumentNullException(nameof(themeKey));
             }
             
-            // Retrieve the shell service
+            
             if (!(GetService(typeof(SVsUIShell)) is IVsUIShell5 shell))
             {
                 throw new InvalidOperationException("Failed to retrieve the shell service.");
             }
-            // Pass the shell as the first parameter
+            
             return Color.FromArgb((int)shell.GetThemedColorRgba(themeKey));
         }
 
