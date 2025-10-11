@@ -13,8 +13,8 @@ Separated in a different repository from [SSMS Tools](https://github.com/Aztic/S
 Generates a query to be executed in the selected databases of the server
 
 # Setup
-- Download the latest zip file with the content
-- Go to your install path and its `Extensions` subfolder (for example: `C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions`)
+- Download the latest zip file with the content from [releaes](https://github.com/Aztic/SSMSTools-21/releases)
+- Go to your install path and its `Extensions` subfolder (for example: `C:\Program Files\Microsoft SQL Server Management Studio 21\Release\Common7\IDE\Extensions`)
 - Create a `SSMSTools_21` folder
 - Paste the content of the zip file inside the folder
 
