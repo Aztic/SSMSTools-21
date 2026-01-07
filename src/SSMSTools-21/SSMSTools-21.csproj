@@ -4,6 +4,90 @@
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 21|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SSMS 21\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\Program Files\Microsoft SQL Server Management Studio 21\Release\Common7\IDE\Extensions\SSMSTools_21</CopyVsixExtensionLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 21|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug SSMS 21\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 21|arm64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\arm64\Debug SSMS 21\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 22|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug SSMS 22\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\Program Files\Microsoft SQL Server Management Studio 22\Release\Common7\IDE\Extensions\SSMSTools_21</CopyVsixExtensionLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 22|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug SSMS 22\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug SSMS 22|arm64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\arm64\Debug SSMS 22\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 21|AnyCPU'">
+    <OutputPath>bin\Release SSMS 21\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 21|x86'">
+    <OutputPath>bin\x86\Release SSMS 21\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 21|arm64'">
+    <OutputPath>bin\arm64\Release SSMS 21\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 22|AnyCPU'">
+    <OutputPath>bin\Release SSMS 22\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 22|x86'">
+    <OutputPath>bin\x86\Release SSMS 22\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release SSMS 22|arm64'">
+    <OutputPath>bin\arm64\Release SSMS 22\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -94,29 +178,25 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="EnvDTE">
-      <HintPath>Lib\envdte.dll</HintPath>
-    </Reference>
-    <Reference Include="EnvDTE100">
-      <HintPath>Lib\envdte100.dll</HintPath>
-    </Reference>
-    <Reference Include="EnvDTE80">
-      <HintPath>Lib\EnvDTE80.dll</HintPath>
-    </Reference>
-    <Reference Include="EnvDTE90">
-      <HintPath>Lib\EnvDTE90.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.CommandBars">
-      <HintPath>Lib\Microsoft.VisualStudio.CommandBars.dll</HintPath>
-    </Reference>
-    <Reference Include="SqlWorkbench.Interfaces">
-      <HintPath>Lib\SqlWorkbench.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="stdole">
-      <HintPath>Lib\stdole.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
+  <!-- SSMS version configuration -->
+  <PropertyGroup Condition="$(Configuration.Contains('SSMS 21'))">
+    <SSMSVersion>21</SSMSVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('SSMS 22'))">
+    <SSMSVersion>22</SSMSVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SqlWorkbench.Interfaces.SSMS$(SSMSVersion)">
+      <HintPath>Lib\$(SSMSVersion)\SqlWorkbench.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+  <Target Name="DebugSSMSVersion" BeforeTargets="Build">
+    <Message Text="SSMSVersion=$(SSMSVersion)" Importance="High" />
+  </Target>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
       <Version>8.0.1</Version>
@@ -137,28 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Commands\MultiDbQueryRunner\Resources\MultiDbQueryRunnerCommand.png" />
-    <Content Include="Lib\envdte.dll">
+    <Content Include="Lib\21\SqlWorkbench.Interfaces.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Lib\envdte100.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\envdte80.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\envdte90.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\envdte90a.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\Microsoft.VisualStudio.CommandBars.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\stdole.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\SqlWorkbench.Interfaces.dll">
+    <Content Include="Lib\22\SqlWorkbench.Interfaces.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\TestCommand.png" />
