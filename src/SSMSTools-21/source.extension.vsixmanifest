@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" ?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SSMSTools_21.c099a67a-e892-4eba-bde6-966fe98b1cd7" Version="0.2" Language="en-US" Publisher="Jhosevic Castañeda" />
+        <Identity Id="SSMSTools_21.c099a67a-e892-4eba-bde6-966fe98b1cd7" Version="0.2.1" Language="en-US" Publisher="Jhosevic Castañeda" />
         <DisplayName>SSMSTools_21</DisplayName>
         <Description xml:space="preserve">Tools to improve SSMS</Description>
     </Metadata>
     <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+          <InstallationTarget Id="Microsoft.VisualStudio.Ssms" Version="[21.0,22.0)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
     </Installation>
