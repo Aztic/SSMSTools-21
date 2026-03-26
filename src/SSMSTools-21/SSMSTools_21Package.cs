@@ -91,7 +91,12 @@ namespace SSMSTools_21
                 return;
             }
 
-            ToolStripMenuItem packageContextMenu = new ToolStripMenuItem(nameof(SSMSTools_21));
+#if DEBUG
+            var objectExplorerMenuItemName = nameof(SSMSTools_21) + " DEBUG";
+#else
+            var objectExplorerMenuItemName = nameof(SSMSTools_21);
+#endif
+            ToolStripMenuItem packageContextMenu = new ToolStripMenuItem(objectExplorerMenuItemName);
 
             var menuItems = new Collection<ToolStripMenuItem>
             {
