@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using Task = System.Threading.Tasks.Task;
 
 namespace SSMSTools_21.Commands.MultiDbQueryRunner
@@ -155,15 +156,29 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
             var usedServers = new HashSet<string>();
             var connections = new List<ConnectedServer>();
 
-            _objectExplorerService.GetSelectedNodes(out var arraySize, out var nodes);
+            var getSelectedNodesMethod = _objectExplorerService.GetType().GetMethod("GetSelectedNodes");
+            var parameters = new object[] { 0, null };
+            getSelectedNodesMethod.Invoke(_objectExplorerService, parameters);
+
+            var arraySize = (int)parameters[0];
             if (arraySize != 1)
             {
                 throw new OnlyOneObjectExplorerNodeAllowedException("Only one node needs to be selected");
             }
+
+            var nodes = (Array)parameters[1];
             foreach (var node in nodes)
             {
-                var connectionString = node.Connection.ConnectionString;
-                var serverName = node.Connection.ServerName;
+                var connection = node.GetType().GetProperty("Connection")
+                    .GetValue(node);
+                var connectionType = connection.GetType();
+
+                var rawConnectionString = (string)connectionType.GetProperty("ConnectionString")
+                    .GetValue(connection);
+                var connectionString = CleanConnectionString(rawConnectionString);
+
+                var serverName = (string)connectionType.GetProperty("ServerName")
+                    .GetValue(connection);
                 if (usedServers.Contains(serverName))
                 {
                     continue;
@@ -192,19 +207,7 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
 
             try
             {
-                var cleanedConnectionString = string.Join(";", connectionString.Split(';')
-                    .Select(x =>
-                    {
-                        var keyValue = x.Split('=');
-                        var key = keyValue[0].Trim().ToLowerInvariant();
-                        if (_sectionsToSanitize.Contains(key) && keyValue.Length > 1)
-                        {
-                            var newKey = key.Replace(" ", string.Empty);
-                            return $"{newKey}={keyValue[1]}";
-                        }
-                        return x;
-                    })
-                    .Where(x => !string.IsNullOrWhiteSpace(x)));
+                var cleanedConnectionString = CleanConnectionString(connectionString);
 
                 string query = $"SELECT name FROM sys.databases";
                 using (var conn = new SqlConnection(cleanedConnectionString))
@@ -229,6 +232,23 @@ namespace SSMSTools_21.Commands.MultiDbQueryRunner
             }
 
             return databases;
+        }
+
+        private string CleanConnectionString(string connectionString)
+        {
+            return string.Join(";", connectionString.Split(';')
+                .Select(x =>
+                {
+                    var keyValue = x.Split('=');
+                    var key = keyValue[0].Trim().ToLowerInvariant();
+                    if (_sectionsToSanitize.Contains(key) && keyValue.Length > 1)
+                    {
+                        var newKey = key.Replace(" ", string.Empty);
+                        return $"{newKey}={keyValue[1]}";
+                    }
+                    return x;
+                })
+                .Where(x => !string.IsNullOrWhiteSpace(x)));
         }
     }
 }
