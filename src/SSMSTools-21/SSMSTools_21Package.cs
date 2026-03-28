@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using SSMSTools_21.Commands.MultiDbQueryRunner;
+using SSMSTools_21.Interceptors.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -77,75 +78,14 @@ namespace SSMSTools_21
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await MultiDbQueryRunnerCommand.InitializeAsync(this);
 
-            if (_treeView != null)
-            {
-                _treeView.ContextMenuStripChanged += TreeView_ContextMenuStripChanged;
-            }
-            
-        }
+            var objectExplorerInterceptor = (IObjectExplorerInterceptor)_serviceProvider.GetService(typeof(IObjectExplorerInterceptor));
+            objectExplorerInterceptor.Initialize();
 
-        private void TreeView_ContextMenuStripChanged(object sender, EventArgs e)
-        {
-            if (_treeView?.ContextMenuStrip?.Items == null || _objectExplorerService == null)
-            {
-                return;
-            }
+            #if DEBUG
+            var eventsInterceptor = (IEventInterceptor)_serviceProvider.GetService(typeof(IEventInterceptor));
+            eventsInterceptor.Initialize();
+            #endif
 
-#if DEBUG
-            var objectExplorerMenuItemName = nameof(SSMSTools_21) + " DEBUG";
-#else
-            var objectExplorerMenuItemName = nameof(SSMSTools_21);
-#endif
-            ToolStripMenuItem packageContextMenu = new ToolStripMenuItem(objectExplorerMenuItemName);
-
-            var menuItems = new Collection<ToolStripMenuItem>
-            {
-                new ToolStripMenuItem
-                {
-                    Text = "Run query in multiple Databases",
-                    Tag = nameof(MultiDbQueryRunnerCommand),
-                    BackColor = VsColorToDrawingColor(EnvironmentColors.ToolWindowBackgroundColorKey),
-                    ForeColor = VsColorToDrawingColor(EnvironmentColors.ToolWindowTextColorKey)
-                }
-            };
-
-            foreach (var menuItem in menuItems)
-            {
-                menuItem.Click += MenuItem_Click;
-                packageContextMenu.DropDownItems.Add(menuItem);
-            }
-
-            _treeView.ContextMenuStrip.Items.Add(packageContextMenu);
-        }
-
-        private void MenuItem_Click(object sender, EventArgs e)
-        {
-            if (sender is ToolStripMenuItem menuItem)
-            {
-                var commandName = menuItem.Tag.ToString();
-                switch (commandName)
-                {
-                    case nameof(MultiDbQueryRunnerCommand):
-                        MultiDbQueryRunnerCommand.Instance.Execute(null, null);
-                        break;
-                }
-            }
-        }
-
-        private Color VsColorToDrawingColor(ThemeResourceKey themeKey)
-        {
-            if (themeKey == null)
-            {
-                throw new ArgumentNullException(nameof(themeKey));
-            }
-            
-            
-            if (!(GetService(typeof(SVsUIShell)) is IVsUIShell5 shell))
-            {
-                throw new InvalidOperationException("Failed to retrieve the shell service.");
-            }
-            
-            return Color.FromArgb((int)shell.GetThemedColorRgba(themeKey));
         }
 
         #endregion

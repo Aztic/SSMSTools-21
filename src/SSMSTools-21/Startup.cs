@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EnvDTE;
+using EnvDTE80;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using Microsoft.VisualStudio.Shell;
 using SSMSTools_21.Factories;
 using SSMSTools_21.Factories.Interfaces;
+using SSMSTools_21.Interceptors;
+using SSMSTools_21.Interceptors.Interfaces;
 using SSMSTools_21.Managers;
 using SSMSTools_21.Managers.Interfaces;
 using SSMSTools_21.Services;
-using System;
-using EnvDTE;
-using EnvDTE80;
-using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using SSMSTools_21.Services.Interfaces;
 using SSMSTools_21.Windows.DatabaseGroupManager;
 using SSMSTools_21.Windows.Interfaces;
 using SSMSTools_21.Windows.MultiDbQueryRunner;
+using System;
 using ConfigurationManager = SSMSTools_21.Managers.ConfigurationManager;
 
 namespace SSMSTools_21
@@ -33,8 +35,8 @@ namespace SSMSTools_21
             RegisterServices(serviceCollection);
             RegisterWindows(serviceCollection);
             RegisterFactories(serviceCollection);
+            RegisterInterceptors(serviceCollection);
 
-            // Build the service provider
             var serviceProvider = serviceCollection.BuildServiceProvider();
             return serviceProvider;
         }
@@ -62,6 +64,7 @@ namespace SSMSTools_21
             services.AddSingleton<IUIService, UiService>();
         }
 
+
         private void RegisterWindows(IServiceCollection services)
         {
             services.AddTransient<IMultiDbQueryRunnerWindow, MultiDbQueryRunnerWindow>();
@@ -71,6 +74,19 @@ namespace SSMSTools_21
         private void RegisterFactories(IServiceCollection services)
         {
             services.AddTransient<IWindowFactory, WindowFactory>();
+        }
+
+        private void RegisterInterceptors(IServiceCollection services)
+        {
+            services.AddSingleton<IObjectExplorerInterceptor>(provider =>
+            {
+                var oeService = _package.GetServiceAsync(typeof(IObjectExplorerService)).Result as IObjectExplorerService;
+                return new ObjectExplorerInterceptor(oeService, _package);
+            });
+
+            #if DEBUG
+            services.AddSingleton<IEventInterceptor, EventInterceptor>();
+            #endif
         }
     }
 }

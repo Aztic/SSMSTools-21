@@ -139,6 +139,10 @@
     <Compile Include="Exceptions\OnlyOneObjectExplorerNodeAllowedException.cs" />
     <Compile Include="Factories\Interfaces\IWindowFactory.cs" />
     <Compile Include="Factories\WindowFactory.cs" />
+    <Compile Include="Interceptors\EventInterceptor.cs" />
+    <Compile Include="Interceptors\Interfaces\IEventInterceptor.cs" />
+    <Compile Include="Interceptors\Interfaces\IObjectExplorerInterceptor.cs" />
+    <Compile Include="Interceptors\ObjectExplorerInterceptor.cs" />
     <Compile Include="Managers\ConfigurationManager.cs" />
     <Compile Include="Managers\Interfaces\IConfigurationManager.cs" />
     <Compile Include="Managers\Interfaces\IMessageManager.cs" />
