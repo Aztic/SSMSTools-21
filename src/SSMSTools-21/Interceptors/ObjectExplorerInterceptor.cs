@@ -53,16 +53,17 @@ namespace SSMSTools_21.Interceptors
 
         private void TreeView_ContextMenuStripChanged(object sender, EventArgs e)
         {
-            if (_treeView?.ContextMenuStrip?.Items == null) return;
+            if (_treeView?.ContextMenuStrip?.Items == null)
+            {
+                return;
+            }
 
-            // 1. Determine Name (Debug vs Release)
 #if DEBUG
             var objectExplorerMenuItemName = "SSMSTools_21 DEBUG";
 #else
             var objectExplorerMenuItemName = "SSMSTools_21";
 #endif
 
-            // 2. Prevent duplicate menus
             if (_treeView.ContextMenuStrip.Items.Cast<ToolStripItem>().Any(x => x.Text == objectExplorerMenuItemName))
             {
                 return;
@@ -70,7 +71,7 @@ namespace SSMSTools_21.Interceptors
 
             ToolStripMenuItem packageContextMenu = new ToolStripMenuItem(objectExplorerMenuItemName);
 
-            // 3. Define Sub-Items
+            // TODO: Inject this dynamically
             var menuItems = new Collection<ToolStripMenuItem>
             {
                 new ToolStripMenuItem
