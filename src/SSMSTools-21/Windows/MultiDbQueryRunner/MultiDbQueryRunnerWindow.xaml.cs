@@ -1,9 +1,11 @@
 ﻿using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.PlatformUI;
 using SSMSTools_21.Configurations.SavedDatabaseGroups;
 using SSMSTools_21.Constants;
 using SSMSTools_21.Events.Arguments;
 using SSMSTools_21.Factories.Interfaces;
+using SSMSTools_21.Helpers;
 using SSMSTools_21.Managers.Interfaces;
 using SSMSTools_21.Mappers;
 using SSMSTools_21.Models;
@@ -145,6 +147,14 @@ namespace SSMSTools_21.Windows.MultiDbQueryRunner
             _windowFactory = windowFactory;
             InitializeComponent();
             DataContext = this;
+            SsmsThemeHelper.ApplyCurrentTheme(this);
+            VSColorTheme.ThemeChanged += OnVsThemeChanged;
+            Closed += (s, e) => VSColorTheme.ThemeChanged -= OnVsThemeChanged;
+        }
+
+        private void OnVsThemeChanged(ThemeChangedEventArgs e)
+        {
+            SsmsThemeHelper.ApplyCurrentTheme(this);
         }
 
         /// <summary>

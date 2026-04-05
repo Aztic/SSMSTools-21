@@ -1,4 +1,6 @@
-﻿using SSMSTools_21.Events.Arguments;
+﻿using Microsoft.VisualStudio.PlatformUI;
+using SSMSTools_21.Events.Arguments;
+using SSMSTools_21.Helpers;
 using SSMSTools_21.Models;
 using SSMSTools_21.Windows.Interfaces;
 using System;
@@ -27,6 +29,14 @@ namespace SSMSTools_21.Windows.DatabaseGroupManager
         {
             InitializeComponent();
             DataContext = this;
+            SsmsThemeHelper.ApplyCurrentTheme(this);
+            VSColorTheme.ThemeChanged += OnVsThemeChanged;
+            Closed += (s, e) => VSColorTheme.ThemeChanged -= OnVsThemeChanged;
+        }
+
+        private void OnVsThemeChanged(ThemeChangedEventArgs e)
+        {
+            SsmsThemeHelper.ApplyCurrentTheme(this);
         }
 
         public bool IsAllSelected
